@@ -47,7 +47,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "阮", "切", "פּ", "龍", "", "[]", "" };
+static const char *tags[] = { "", "", "阮", "切", "פּ", "龍", "", "[]", "" }; //Characters from the NERD font, they wont show on github
 
 static const Rule rules[] = {
 	/* xprop(1):

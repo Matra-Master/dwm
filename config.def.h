@@ -26,6 +26,8 @@ static const char colRed[]          = "#ff0000";
 static const char colGreen[]        = "#E634EC";
 static const char col11[]           = "#ffffff";
 static const char col12[]           = "#ffffff";
+//Link to the color palette for reference
+//https://coolors.co/005577-e634ec-08949b-000b1e-4300a2-8a039e-f57800-123e7c-fab8fb-ff0000
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm]  = { colBlack,	colPink,	colCyan },	//Colores de Barra
@@ -100,28 +102,29 @@ static const char *termcmd[]  = { "alacritty", NULL };
 static const char *browsercmd[] = { "firefox", NULL };
 /*static const char *termcmd[]  = { "st", NULL };*/
 
-static const char *playpause[]	    = { "playerctl", "play-pause"}; /* Play */
-static const char *nextctl[]	    = { "playerctl", "next"};	/* Next Song */
+static const char *playpause[]	= { "playerctl", "play-pause"};	/* Play */
+static const char *nextctl[]		= { "playerctl", "next"};	/* Next Song */
 static const char *previousctl[]    = { "playerctl", "previous"}; /* Prev Song */
-static const char *toshutdown[]	    = { "prompt", "Sure you want to shut down?", "shutdown now"};
-static const char *tosuspend[]	    = { "prompt", "Suspend sir?", "systemctl suspend"};
-static const char *tolock[]	    = { "dm-tool", "lock"}; /* Locks the screen with LightDM */
-static const char *touchpadoff[]    = { "touchpadoff"};		/* Turns the touchpad off */
-static const char *screenshot[]	    = { "scrot", "~/Pictures/Screenshots/Screenshot_-%Y-%m-%d_%H-%M.png"}; /* Simple screenshot */
+static const char *toshutdown[]	= { "prompt", "Sure you want to shut down?", "shutdown now"};
+static const char *tosuspend[]	= { "prompt", "Suspend sir?", "systemctl suspend"};
+static const char *tolock[]		= { "dm-tool", "lock"}; 	/* Locks the screen with LightDM */
+static const char *touchpadoff[]	= { "touchpadoff"};		/* Turns the touchpad off */
+static const char *screenshot[]	= { "scrot", "Screenshot_-%Y-%m-%d_%H-%M.png", "-e", "mv", "$f", "~/Pictures/Screenshots/"}; /* Simple screenshot */
 
 static Key keys[] = {
 	/* modifier			key		 function	argument */
 	{ 0,              XF86XK_AudioLowerVolume, 	 spawn, 	SHCMD("pactl set-sink-volume 0 -10%; sigdwmblocks 5") },
-	{ 0,              XF86XK_AudioMute,		 spawn, 	SHCMD("pactl set-sink-mute 0 toggle; sigdwmblocks 5") },
+	{ 0,              XF86XK_AudioMute,			 spawn, 	SHCMD("pactl set-sink-mute 0 toggle; sigdwmblocks 5") },
 	{ 0,              XF86XK_AudioRaiseVolume, 	 spawn, 	SHCMD("pactl set-sink-volume 0 +10%; sigdwmblocks 5") },
-	{ 0,              XF86XK_AudioPlay,		 spawn, 	{.v = playpause } },
-	{ 0,              XF86XK_AudioPrev,		 spawn, 	{.v = previousctl } },
-	{ 0,              XF86XK_AudioNext,		 spawn, 	{.v = nextctl } },
+	{ 0,              XF86XK_AudioPlay,			 spawn, 	{.v = playpause } },
+	{ 0,              XF86XK_AudioPrev,			 spawn, 	{.v = previousctl } },
+	{ 0,              XF86XK_AudioNext,			 spawn, 	{.v = nextctl } },
 	{ 0,              XF86XK_MonBrightnessUp,  	 spawn, 	SHCMD("brightnessctl -q s +10%; sigdwmblocks 3") },
 	{ 0,              XF86XK_MonBrightnessDown,	 spawn, 	SHCMD("brightnessctl -q s 10%-; sigdwmblocks 3") },
 //	{ 0,				XK_Print,  	 spawn,		SHCMD("scrot ~/Pictures/Screenshots/Screenshot_-%Y-%m-%d_%H-%M.png") },
 	{ 0,				XK_Print,	 spawn, 	{.v = screenshot } },
-	{ MODKEY,			XK_Print,	 spawn,	SHCMD("scrot ~/Pictures/Screenshots/Screenshot_-%Y-%m-%d_%H-%M.png -e 'pcmanfm ~/Pictures/Screenshots/'") },
+//	{ MODKEY,			XK_Print,	 spawn,	SHCMD("scrot ~/Pictures/Screenshots/Screenshot_-%Y-%m-%d_%H-%M.png -e 'pcmanfm ~/Pictures/Screenshots/'") },
+	{ MODKEY,			XK_Print,	 spawn,	SHCMD("scrot ~/Pictures/Screenshots/Screenshot_-%Y-%m-%d_%H-%M.png -e 'viewnior $f'") },
 	{ MODKEY,				  XK_q,	 killclient,     {0} }, //Kills a window
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} }, //Kills dwm
 	{ MODKEY,				  XK_w,	 spawn,	   {.v = toshutdown } },

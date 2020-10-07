@@ -107,7 +107,7 @@ static const char *previousctl[]    = { "playerctl", "previous"}; /* Prev Song *
 static const char *toshutdown[]	    = { "prompt", "Sure you want to shut down?", "shutdown now"};
 static const char *tosuspend[]	    = { "prompt", "Suspend sir?", "systemctl suspend"};
 static const char *tolock[]	    = { "dm-tool", "lock"}; /* Locks the screen with LightDM */
-static const char *touchpadoff[]    = { "touchpadoff"};		/*Turns the touchpad "off" */
+static const char *touchpadoff[]    = { "touchpadoff"};		/* Turns the touchpad off */
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */

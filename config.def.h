@@ -102,14 +102,15 @@ static const char *termcmd[]  = { "alacritty", NULL };
 static const char *browsercmd[] = { "firefox", NULL };
 /*static const char *termcmd[]  = { "st", NULL };*/
 
-static const char *playpause[]	= { "playerctl", "play-pause"};	/* Play */
-static const char *nextctl[]		= { "playerctl", "next"};	/* Next Song */
-static const char *previousctl[]    = { "playerctl", "previous"}; /* Prev Song */
-static const char *toshutdown[]	= { "prompt", "Sure you want to shut down?", "shutdown now"};
-static const char *tosuspend[]	= { "prompt", "Suspend sir?", "systemctl suspend"};
-static const char *tolock[]		= { "dm-tool", "lock"}; 	/* Locks the screen with LightDM */
-static const char *touchpadoff[]	= { "touchpadoff"};		/* Turns the touchpad off */
-static const char *screenshot[]	= { "scrot", "Screenshot_-%Y-%m-%d_%H-%M.png", "-e", "mv", "$f", "~/Pictures/Screenshots/"}; /* Simple screenshot */
+static const char *playpause[]	= { "playerctl", "play-pause" };	/* Play */
+static const char *nextctl[]		= { "playerctl", "next" };	/* Next Song */
+static const char *previousctl[]    = { "playerctl", "previous" }; /* Prev Song */
+//static const char *toshutdown[]	= { "prompt", "Sure you want to shut down?", "shutdown now" };
+static const char *tomanagenetwork[] = {"networkmanager_dmenu" };
+static const char *tosuspend[]	= { "prompt", "Suspend sir?", "systemctl suspend" };
+static const char *tolock[]		= { "dm-tool", "lock" }; 	/* Locks the screen with LightDM */
+static const char *touchpadoff[]	= { "touchpadoff" };		/* Turns the touchpad off */
+static const char *screenshot[]	= { "scrot", "Screenshot_-%Y-%m-%d_%H-%M.png", "-e", "mv", "$f", "~/Pictures/Screenshots/" }; /* Simple screenshot */
 
 static Key keys[] = {
 	/* modifier			key		 function	argument */
@@ -122,12 +123,12 @@ static Key keys[] = {
 	{ 0,              XF86XK_MonBrightnessUp,  	 spawn, 	SHCMD("brightnessctl -q s +10%; sigdwmblocks 3") },
 	{ 0,              XF86XK_MonBrightnessDown,	 spawn, 	SHCMD("brightnessctl -q s 10%-; sigdwmblocks 3") },
 //	{ 0,				XK_Print,  	 spawn,		SHCMD("scrot ~/Pictures/Screenshots/Screenshot_-%Y-%m-%d_%H-%M.png") },
-	{ 0,				XK_Print,	 spawn, 	{.v = screenshot } },
+	{ 0,				XK_Print,	 spawn, 	{v = screenshot } },
 //	{ MODKEY,			XK_Print,	 spawn,	SHCMD("scrot ~/Pictures/Screenshots/Screenshot_-%Y-%m-%d_%H-%M.png -e 'pcmanfm ~/Pictures/Screenshots/'") },
 	{ MODKEY,			XK_Print,	 spawn,	SHCMD("scrot ~/Pictures/Screenshots/Screenshot_-%Y-%m-%d_%H-%M.png -e 'viewnior $f'") },
 	{ MODKEY,				  XK_q,	 killclient,     {0} }, //Kills a window
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} }, //Kills dwm
-	{ MODKEY,				  XK_w,	 spawn,	   {.v = toshutdown } },
+	{ MODKEY,				  XK_w,	 spawn,	   {.v = tomanagenetwork } },
 	{ MODKEY,				  XK_e,	 spawn,	   {.v = tosuspend } },
 //	{ MODKEY,				  XK_r,      ,		   {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
@@ -153,7 +154,7 @@ static Key keys[] = {
 //	{ MODKEY,				  XK_c,      ,		   {0} },
 //	{ MODKEY,				  XK_v,      ,		   {0} },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
-//	{ MODKEY,				  XK_n,      ,		   {0} },
+	{ MODKEY,			XK_n,     spawn,		SHCMD("sessionprompt")},
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 

@@ -3,7 +3,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 0;        /* border pixel of windows */
-static const unsigned int gappx     = 5;        /* gaps between windows */
+static const unsigned int gappx     = 0;        /* gaps between windows */
 static const unsigned int snap      = 16;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 0;        /* 0 means bottom bar */
@@ -106,72 +106,71 @@ static const char *playpause[]	= { "playerctl", "play-pause" };	/* Play */
 static const char *nextctl[]		= { "playerctl", "next" };	/* Next Song */
 static const char *previousctl[]    = { "playerctl", "previous" }; /* Prev Song */
 //static const char *toshutdown[]	= { "prompt", "Sure you want to shut down?", "shutdown now" };
-static const char *tomanagenetwork[] = {"networkmanager_dmenu" };
 static const char *tosuspend[]	= { "prompt", "Suspend sir?", "systemctl suspend" };
 static const char *tolock[]		= { "dm-tool", "lock" }; 	/* Locks the screen with LightDM */
 static const char *touchpadoff[]	= { "touchpadoff" };		/* Turns the touchpad off */
 static const char *screenshot[]	= { "scrot", "Screenshot_-%Y-%m-%d_%H-%M.png", "-e", "mv", "$f", "~/Pictures/Screenshots/" }; /* Simple screenshot */
 
 static Key keys[] = {
-	/* modifier			key		 function	argument */
-	{ 0,              XF86XK_AudioLowerVolume, 	 spawn, 	SHCMD("pactl set-sink-volume 0 -10%; sigdwmblocks 5") },
-	{ 0,              XF86XK_AudioMute,			 spawn, 	SHCMD("pactl set-sink-mute 0 toggle; sigdwmblocks 5") },
-	{ 0,              XF86XK_AudioRaiseVolume, 	 spawn, 	SHCMD("pactl set-sink-volume 0 +10%; sigdwmblocks 5") },
-	{ 0,              XF86XK_AudioPlay,			 spawn, 	{.v = playpause } },
-	{ 0,              XF86XK_AudioPrev,			 spawn, 	{.v = previousctl } },
-	{ 0,              XF86XK_AudioNext,			 spawn, 	{.v = nextctl } },
-	{ 0,              XF86XK_MonBrightnessUp,  	 spawn, 	SHCMD("brightnessctl -q s +10%; sigdwmblocks 3") },
-	{ 0,              XF86XK_MonBrightnessDown,	 spawn, 	SHCMD("brightnessctl -q s 10%-; sigdwmblocks 3") },
-//	{ 0,				XK_Print,  	 spawn,		SHCMD("scrot ~/Pictures/Screenshots/Screenshot_-%Y-%m-%d_%H-%M.png") },
-	{ 0,				XK_Print,	 spawn, 	{v = screenshot } },
-//	{ MODKEY,			XK_Print,	 spawn,	SHCMD("scrot ~/Pictures/Screenshots/Screenshot_-%Y-%m-%d_%H-%M.png -e 'pcmanfm ~/Pictures/Screenshots/'") },
-	{ MODKEY,			XK_Print,	 spawn,	SHCMD("scrot ~/Pictures/Screenshots/Screenshot_-%Y-%m-%d_%H-%M.png -e 'viewnior $f'") },
-	{ MODKEY,				  XK_q,	 killclient,     {0} }, //Kills a window
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} }, //Kills dwm
-	{ MODKEY,				  XK_w,	 spawn,	   {.v = tomanagenetwork } },
-	{ MODKEY,				  XK_e,	 spawn,	   {.v = tosuspend } },
-//	{ MODKEY,				  XK_r,      ,		   {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-//	{ MODKEY,				  XK_y,      ,		   {0} },
-//	{ MODKEY,				  XK_u,      ,		   {0} },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-//	{ MODKEY,				  XK_o,      ,		   {0} },
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY,				  XK_a,      spawn,		{.v = browsercmd } },
-//	{ MODKEY,				  XK_s,      ,		   {0} },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
-//	{ MODKEY,				  XK_g,      ,		   {0} },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY|ShiftMask,		  XK_l,      spawn,	   {.v = tolock } },
-	{ MODKEY,				  XK_z,      spawn,	   {.v = touchpadoff } },
-//	{ MODKEY,				  XK_x,      ,		   {0} },
-	{ MODKEY|ShiftMask,             XK_x,      spawn,          SHCMD("xkill")},
-//	{ MODKEY,				  XK_c,      ,		   {0} },
-//	{ MODKEY,				  XK_v,      ,		   {0} },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY,			XK_n,     spawn,		SHCMD("sessionprompt")},
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	/* modifier			key		function	argument */
+	{ 0,              XF86XK_AudioLowerVolume, 	spawn, 	SHCMD("pactl set-sink-volume 0 -10%; sigdwmblocks 5") },
+	{ 0,              XF86XK_AudioMute,		spawn, 	SHCMD("pactl set-sink-mute 0 toggle; sigdwmblocks 5") },
+	{ 0,              XF86XK_AudioRaiseVolume, 	spawn, 	SHCMD("pactl set-sink-volume 0 +10%; sigdwmblocks 5") },
+	{ 0,              XF86XK_AudioPlay,		spawn, 	{.v = playpause } },
+	{ 0,              XF86XK_AudioPrev,		spawn, 	{.v = previousctl } },
+	{ 0,              XF86XK_AudioNext,		spawn, 	{.v = nextctl } },
+	{ 0,              XF86XK_MonBrightnessUp,	spawn, 	SHCMD("brightnessctl -q s +10%; sigdwmblocks 3") },
+	{ 0,              XF86XK_MonBrightnessDown,	spawn, 	SHCMD("brightnessctl -q s 10%-; sigdwmblocks 3") },
+//	{ 0,				XK_Print,	spawn,		SHCMD("scrot ~/Pictures/Screenshots/Screenshot_-%Y-%m-%d_%H-%M.png") },
+	{ 0,				XK_Print,	spawn, 	{.v = screenshot } },
+//	{ MODKEY,			XK_Print,	spawn,	SHCMD("scrot ~/Pictures/Screenshots/Screenshot_-%Y-%m-%d_%H-%M.png -e 'pcmanfm ~/Pictures/Screenshots/'") },
+	{ MODKEY,			XK_Print,	spawn,	SHCMD("scrot ~/Pictures/Screenshots/Screenshot_-%Y-%m-%d_%H-%M.png -e 'viewnior $f'") },
+	{ MODKEY,			XK_q,		killclient,     {0} }, //Kills a window
+	{ MODKEY|ShiftMask,             XK_q,		quit,           {0} }, //Kills dwm
+	{ MODKEY,			XK_w,		spawn,	   SHCMD("sessionprompt") },
+	{ MODKEY,			XK_e,		spawn,	   {.v = tosuspend } },
+//	{ MODKEY,			XK_r,		,		   {0} },
+	{ MODKEY,			XK_t,		setlayout,      {.v = &layouts[0]} },
+//	{ MODKEY,			XK_y,		,		   {0} },
+//	{ MODKEY,			XK_u,		,		   {0} },
+	{ MODKEY,                       XK_i,		incnmaster,     {.i = +1 } },
+//	{ MODKEY,			XK_o,		,		   {0} },
+	{ MODKEY,                       XK_p,		spawn,          {.v = dmenucmd } },
+	{ MODKEY,			XK_a,		spawn,		{.v = browsercmd } },
+//	{ MODKEY,			XK_s,		,		   {0} },
+	{ MODKEY,                       XK_d,		incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_f,		setlayout,      {.v = &layouts[1]} },
+	{ MODKEY|ShiftMask,             XK_f,		togglefullscr,  {0} },
+//	{ MODKEY,			XK_g,		,		   {0} },
+	{ MODKEY,                       XK_h,		setmfact,       {.f = -0.05} },
+	{ MODKEY,                       XK_j,		focusstack,     {.i = +1 } },
+	{ MODKEY,                       XK_k,		focusstack,     {.i = -1 } },
+	{ MODKEY,                       XK_l,		setmfact,       {.f = +0.05} },
+	{ MODKEY|ShiftMask,		XK_l,		spawn,	   {.v = tolock } },
+	{ MODKEY,			XK_z,		spawn,	   {.v = touchpadoff } },
+//	{ MODKEY,			XK_x,		,		   {0} },
+	{ MODKEY|ShiftMask,             XK_x,		spawn,          SHCMD("xkill")},
+//	{ MODKEY,			XK_c,		,		   {0} },
+//	{ MODKEY,			XK_v,		,		   {0} },
+	{ MODKEY,                       XK_b,		togglebar,      {0} },
+	{ MODKEY,			XK_n,		spawn,	   SHCMD("networkmanager_dmenu")},
+	{ MODKEY,                       XK_m,		setlayout,      {.v = &layouts[2]} },
+	{ MODKEY|ShiftMask,             XK_Return,	spawn,          {.v = termcmd } },
 
-	{ MODKEY,                       XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
+	{ MODKEY,                       XK_Return,	zoom,           {0} },
+	{ MODKEY,                       XK_Tab,		view,           {0} },
 
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
-	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
+	{ MODKEY,                       XK_space,	setlayout,      {0} },
+	{ MODKEY|ShiftMask,             XK_space,	togglefloating, {0} },
+	{ MODKEY,                       XK_0,		view,           {.ui = ~0 } },
+	{ MODKEY|ShiftMask,             XK_0,		tag,            {.ui = ~0 } },
+	{ MODKEY,                       XK_comma,	focusmon,       {.i = -1 } },
+	{ MODKEY,                       XK_period,	focusmon,       {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_comma,	tagmon,         {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_period,	tagmon,         {.i = +1 } },
+	{ MODKEY,                       XK_minus,	setgaps,        {.i = -1 } },
+	{ MODKEY,                       XK_equal,	setgaps,        {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_equal,	setgaps,        {.i = 0  } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)

@@ -29,20 +29,8 @@ static const char col12[]           = "#ffffff";
 //Link to the color palette for reference
 //https://coolors.co/005577-e634ec-08949b-000b1e-4300a2-8a039e-f57800-123e7c-fab8fb-ff0000
 static const char *colors[][3]      = {
-	/*               fg         bg         border   */
+	/*               fg             bg              border   */
 	[SchemeNorm]  = { colBlack,	colPink,	colCyan },	//Colores de Barra
-	[SchemeCol1]  = { colPink,	col_gray1,	col_gray2 },
-	[SchemeCol2]  = { colCyan,	col_gray1,	col_gray2 },
-	[SchemeCol3]  = { colBlack,	col_gray1,	col_gray2 },
-	[SchemeCol4]  = { colPurple,	col_gray1,	col_gray2 },
-	[SchemeCol5]  = { colMagenta,	col_gray1,	col_gray2 },
-	[SchemeCol6]  = { colYellow,	col_gray1,	col_gray2 },
-	[SchemeCol7]  = { colBlue,	col_gray1,	col_gray2 },
-	[SchemeCol8]  = { colWhite,	col_gray1,	col_gray2 },
-	[SchemeCol9]  = { colRed,	col_gray1,	col_gray2 },
-	[SchemeCol10] = { colGreen,	col_gray1,	col_gray2 },
-	[SchemeCol11] = { col11,	col_gray1,	col_gray2 },
-	[SchemeCol12] = { col12,	col_gray1,	col_gray2 },
 	[SchemeSel]   = { colPurple,	colCyan,	colCyan  },	 //Ventana acutal y selecciones
 
 };
@@ -56,20 +44,22 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 //	Check window class, instance and stuff with xprop
-	/* class      	instance	    title       	tags mask     	isfloating   	monitor */
+	/* class      	instance	    title      	tags mask     	isfloating   	monitor */
 //	{ "Gimp",     	NULL,       	NULL,       	0,            	1,           	-1 },
 	{ "firefox",  	NULL,       	NULL,       	2,     	    	0,           	-1 },
+	{ "qutebrowser",NULL,       	NULL,       	2,     	    	0,           	-1 },
 	{ "firefox",  	NULL,       	"Library",   	2,     	    	1,           	-1 },
-	{ "zoom",     	NULL,       	NULL,       	1 << 4,	    	0,           	-1 },
-	{ "zoom",    	NULL,      		"Zoom Meeting",	1 << 5,	    	0,           	-1 },
+	{ "zoom",     	NULL,       	NULL,       	1 << 4,	    	1,           	-1 },
+	{ "zoom",    	NULL,           "Zoom Meeting",	1 << 5,	    	1,           	-1 },
 	{ "Rambox",   	NULL,       	NULL,       	1 << 3,	    	0,           	-1 },
 	{ NULL,	  	"lutris",   	NULL,       	1 << 6,	    	0,           	-1 },
-	{ "Spotify",  	"spotify",  	NULL,	      	1 << 2,	    	0,			-1 },
-	{ "Steam",    	NULL,       	NULL,       	1 << 6,	    	1,			-1 },
-	{ "Steam",    	NULL,			"Friends List",  	1 << 6,	    	1,			-1 },
-	{ "Steam",    	NULL,			"Steam - News",	1 << 6,	    	1,			-1 },
+	{ "Spotify",  	"spotify",  	NULL,	      	1 << 2,	    	0,		-1 },
+	{ "Steam",    	NULL,       	NULL,       	1 << 6,	    	0,		-1 },
+	{ "Steam",    	NULL,		"Friends List",	1 << 6,	    	1,		-1 },
+	{ "Steam",    	NULL,		"Steam - News",	1 << 6,	    	1,		-1 },
 	{ "Gimp",     	NULL,       	NULL,       	1 << 5,     	0,           	-1 },
-	{ "Pavucontrol",  "pavucontrol",	NULL,			0,			1,			-1 },
+	{ "Pavucontrol","pavucontrol",  NULL,		0,		1,		-1 },
+	{ "Pcmanfm",  	NULL,       	NULL,       	16,     	    	0,           	-1 },
 };
 
 /* layout(s) */
@@ -99,7 +89,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-p", "dmenu!", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *browsercmd[] = { "firefox", NULL };
 /*static const char *termcmd[]  = { "st", NULL };*/
@@ -112,12 +102,12 @@ static const char *tosuspend[]	= { "prompt", "Suspend sir?", "systemctl suspend"
 static const char *tolock[]		= { "dm-tool", "lock" }; 	/* Locks the screen with LightDM */
 static const char *touchpadoff[]	= { "touchpadoff" };		/* Turns the touchpad off */
 static const char *screenshot[]	= { "scrot", "Screenshot_-%Y-%m-%d_%H-%M.png", "-e", "mv", "$f", "~/Pictures/Screenshots/" }; /* Simple screenshot */
+static const char *listConfigs[] = { "./home/matra/.local/scripts/listConfigs", NULL}; /* nvim with a config file*/
 
 static Key keys[] = {
 	/* modifier			key		function	argument */
 	{ 0,              XF86XK_AudioLowerVolume, 	spawn, 	SHCMD("pactl set-sink-volume 0 -10%; sigdwmblocks 5") },
-	{ 0,              XF86XK_AudioMute,		spawn, 	SHCMD("pactl set-sink-mute 0 toggle; sigdwmblocks 5") },
-	{ 0,              XF86XK_AudioRaiseVolume, 	spawn, 	SHCMD("pactl set-sink-volume 0 +10%; sigdwmblocks 5") },
+
 	{ 0,              XF86XK_AudioPlay,		spawn, 	{.v = playpause } },
 	{ 0,              XF86XK_AudioPrev,		spawn, 	{.v = previousctl } },
 	{ 0,              XF86XK_AudioNext,		spawn, 	{.v = nextctl } },
@@ -152,7 +142,7 @@ static Key keys[] = {
 	{ MODKEY,			XK_z,		spawn,	   {.v = touchpadoff } },
 //	{ MODKEY,			XK_x,		,		   {0} },
 	{ MODKEY|ShiftMask,             XK_x,		spawn,          SHCMD("xkill")},
-//	{ MODKEY,			XK_c,		,		   {0} },
+	{ MODKEY,			XK_c,		spawn,		   {.v = listConfigs } },
 //	{ MODKEY,			XK_v,		,		   {0} },
 	{ MODKEY,                       XK_b,		togglebar,      {0} },
 	{ MODKEY,			XK_n,		spawn,	   SHCMD("networkmanager_dmenu")},

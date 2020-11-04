@@ -101,20 +101,22 @@ static const char *previousctl[]    = { "playerctl", "previous" }; /* Prev Song 
 static const char *tosuspend[]	= { "prompt", "Suspend sir?", "systemctl suspend" };
 static const char *tolock[]		= { "dm-tool", "lock" }; 	/* Locks the screen with LightDM */
 static const char *touchpadoff[]	= { "touchpadoff" };		/* Turns the touchpad off */
-static const char *screenshot[]	= { "scrot", "Screenshot_-%Y-%m-%d_%H-%M.png", "-e", "mv", "$f", "~/Pictures/Screenshots/" }; /* Simple screenshot */
+//static const char *screenshot[]	= { "scrot", "Screenshot_-%Y-%m-%d_%H-%M.png", "-e", "mv", "$f", "~/Pictures/Screenshots/" }; /* Simple screenshot */
 static const char *listConfigs[] = { "./home/matra/.local/scripts/listConfigs", NULL}; /* nvim with a config file*/
 
 static Key keys[] = {
 	/* modifier			key		function	argument */
 	{ 0,              XF86XK_AudioLowerVolume, 	spawn, 	SHCMD("pactl set-sink-volume 0 -10%; sigdwmblocks 5") },
-
+        { 0,              XF86XK_AudioRaiseVolume, 	spawn, 	SHCMD("pactl set-sink-volume 0 +10%; sigdwmblocks 5") },
+        { 0,              XF86XK_AudioMute,             spawn,  SHCMD("pactl set-sink-mute 0 toggle; sigdwmblocks 5") },
 	{ 0,              XF86XK_AudioPlay,		spawn, 	{.v = playpause } },
 	{ 0,              XF86XK_AudioPrev,		spawn, 	{.v = previousctl } },
 	{ 0,              XF86XK_AudioNext,		spawn, 	{.v = nextctl } },
 	{ 0,              XF86XK_MonBrightnessUp,	spawn, 	SHCMD("brightnessctl -q s +10%; sigdwmblocks 3") },
 	{ 0,              XF86XK_MonBrightnessDown,	spawn, 	SHCMD("brightnessctl -q s 10%-; sigdwmblocks 3") },
-//	{ 0,				XK_Print,	spawn,		SHCMD("scrot ~/Pictures/Screenshots/Screenshot_-%Y-%m-%d_%H-%M.png") },
-	{ 0,				XK_Print,	spawn, 	{.v = screenshot } },
+
+	{ 0,				XK_Print,	spawn,	SHCMD("scrot ~/Pictures/Screenshots/Screenshot_-%Y-%m-%d_%H-%M.png") },
+//	{ 0,				XK_Print,	spawn, 	{.v = screenshot } },
 //	{ MODKEY,			XK_Print,	spawn,	SHCMD("scrot ~/Pictures/Screenshots/Screenshot_-%Y-%m-%d_%H-%M.png -e 'pcmanfm ~/Pictures/Screenshots/'") },
 	{ MODKEY,			XK_Print,	spawn,	SHCMD("scrot ~/Pictures/Screenshots/Screenshot_-%Y-%m-%d_%H-%M.png -e 'viewnior $f'") },
 	{ MODKEY,			XK_q,		killclient,     {0} }, //Kills a window
@@ -139,9 +141,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_k,		focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_l,		setmfact,       {.f = +0.05} },
 	{ MODKEY|ShiftMask,		XK_l,		spawn,	   {.v = tolock } },
-	{ MODKEY,			XK_z,		spawn,	   {.v = touchpadoff } },
+	{ MODKEY|ShiftMask,		XK_z,		spawn,	   {.v = touchpadoff } },
 //	{ MODKEY,			XK_x,		,		   {0} },
-	{ MODKEY|ShiftMask,             XK_x,		spawn,          SHCMD("xkill")},
+	{ MODKEY,                       XK_x,		spawn,          SHCMD("xkill")},
 	{ MODKEY,			XK_c,		spawn,		   {.v = listConfigs } },
 //	{ MODKEY,			XK_v,		,		   {0} },
 	{ MODKEY,                       XK_b,		togglebar,      {0} },

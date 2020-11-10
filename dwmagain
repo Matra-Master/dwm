@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/bin/
+#This will automate my patching of dwm
+#
 cp config.def.h config.h
 make clean install
 killall dwm
